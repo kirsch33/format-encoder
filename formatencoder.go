@@ -57,6 +57,7 @@ func (se *FormattedEncoder) Provision(ctx caddy.Context) error {
 	if se.Template == "" {
 		return fmt.Errorf("missing template for formatted log encoder")
 	}
+	se.LogEncoderConfig.TimeFormat = "rfc3339"
 	se.Encoder = zapcore.NewJSONEncoder(se.ZapcoreEncoderConfig())
 	return nil
 }
@@ -118,20 +119,12 @@ func (se FormattedEncoder) EncodeEntry(ent zapcore.Entry, fields []zapcore.Field
 // See the godoc on the LogEncoderConfig type for the syntax of
 // subdirectives that are common to most/all encoders.
 func (se *FormattedEncoder) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
-	
-	for nesting := d.Nesting(); d.NextBlock(nesting); {
-		subdir := d.Val()
+	for d.Next() {
 		var template string
 		if !d.AllArgs(&template) {
 			template = commonLogFormat
 		}
 		se.Template = template
-		switch subdir {
-		case "time_format":
-			lec.TimeFormat = arg
-		default:
-			return d.Errf("unrecognized subdirective %s", subdir)
-		}
 	}
 	return nil
 }
