@@ -1,1 +1,5 @@
-This plugin is not my design. I cloned the repo from https://github.com/caddyserver/format-encoder and made some changes to accomodate time_format encoding option. All credit to Matthew Holt, The Caddy Authors and Mohammed90.
+# format-encoder for Caddy v2
+
+This repo is a port of Mohammed90's "format-encoder" module for some random personal tweaks. See original plugin below:
+
+https://github.com/caddyserver/format-encoder
